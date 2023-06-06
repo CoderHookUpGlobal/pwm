@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>On and Offline Password Manager</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<style type="text/css">
+
+</style>
+
+<body>
+  <section class="derive-key pbkdf2">
+    <h2>PBKDF2</h2>
+    <section class="derive-key-controls">
+      <div class="message-control">
+        <label for="pbkdf2-message">Enter a message to encrypt:</label>
+        <input type="text" id="pbkdf2-message" name="message" size="25" value="The bunny hops at teatime">
+      </div>
+      <div class="ciphertext">Ciphertext:<span class="ciphertext-value"></span></div>
+      <div class="decrypted">Decrypted:<span class="decrypted-value"></span></div>
+
+      <input class="encrypt-button" type="button" value="Encrypt">
+
+    </section>
+  </section>
+  <div>
+    <input type="file" id="pwf">
+    <button>Create New Password File</button>
+    <button>Download Password File</button>
+    <button onclick="AddPassword()">Add Password</button>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>PW</th>
+          <th>Desc</th>
+        </tr>
+      </thead>
+      <tbody id="pwt">
+      </tbody>
+    </table>
+
+  </div>
+
+  <script>
+    (() => {
+
+      const $id = (id) => document.getElementById(id)
+      const $cr = (t, opt) => document.createElement(t, opt)
+      const $qs = (q) => document.querySelector(q)
+            
+      function getKeyMaterial() {
+        // TODO Create Password Display
+        let password = window.prompt("Enter your password");
+        let enc = new TextEncoder();
+        return window.crypto.subtle.importKey(
+          "raw",
+          enc.encode(password),
+          { name: "PBKDF2" },
+          false,
+          ["deriveBits", "deriveKey"]
+        );
+      }
+
+      function getKey(keyMaterial, salt) {
+        return window.crypto.subtle.deriveKey(
+          {
+            "name": "PBKDF2",
+            salt: salt,
+            "iterations": 1000000,
+            "hash": "SHA-256"
+          },
+          keyMaterial,
+          { "name": "AES-GCM", "length": 256 },
+          true,
+          ["encrypt", "decrypt"]
+        );
+      }
+      
+      function getData() {
+        // TODO Get The JSON
+        let message = $qs("#pbkdf2-message").value;
+        let enc = new TextEncoder();
+        return enc.encode(message);
+      }
+      
+      async function encryptF() {
+
+        // Create the Salt and IV
+        const salt = window.crypto.getRandomValues(new Uint8Array(16));
+        const iv = window.crypto.getRandomValues(new Uint8Array(12));
+
+        // Create the Encryption Key
+        let keyMaterial = await getKeyMaterial();
+        let key = await getKey(keyMaterial, salt);
+
+        // Encode the Data        
+        encrypted_data = await window.crypto.subtle.encrypt({ name: "AES-GCM", iv: iv }, key, getData());
+
+        // Prepare the Vault Information
+        const valut_data = window.btoa(String.fromCharCode.apply(null, new Uint8Array(encrypted_data)))
+        const vault_iv = window.btoa(String.fromCharCode.apply(null, new Uint8Array(iv)))
+        const vault_salt = window.btoa(String.fromCharCode.apply(null, salt))
+        const vault = JSON.stringify({ "data": valut_data, "iv": vault_iv, "salt": vault_salt })
+
+        // Download the Vault File
+        let dfl = $cr('a');
+        dfl.href = 'data:attachment/json,' + encodeURI(vault);
+        dfl.target = '_blank';
+        dfl.download = 'password.vault';
+        dfl.click();
+      }
+           
+      async function decryptF(e) {
+
+        // Decode the Vault File
+        let f = decodeF(e.target.result)
+
+        // Create the PBKDF2 Key
+        let keyMaterial = await getKeyMaterial();
+        let key = await getKey(keyMaterial, f.salt);
+
+        // Decrypt the Vault Data or Report an Error
+        try {
+          let decrypted = await window.crypto.subtle.decrypt({ name: "AES-GCM", iv: f.iv }, key, f.data);
+          console.log(String.fromCharCode.apply(null, new Uint8Array(decrypted)));
+        } catch (e) {
+          console.log(e)
+          decryptedValue.classList.add("error");
+          decryptedValue.textContent = "*** Decryption error ***";
+        }
+      }
+
+      function decodeF(file) {
+        
+        // Parse the Vault File's JSON
+        let vjs = JSON.parse(file)
+
+        // Create an Array of the JSON Elements to Decode
+        let dc = ["iv", "data", "salt"]
+        
+        // Decode
+        for (let k of dc) {
+          let string = window.atob(vjs[k])
+          const buffer = new ArrayBuffer(string.length)
+          const bufferView = new Uint8Array(buffer)
+          for (let i = 0; i < string.length; i++) {
+            bufferView[i] = string.charCodeAt(i)
+          }
+          vjs[k] = buffer
+        }
+        
+        return vjs
+      }
+
+      function CreateNewPasswordFile() {
+        
+        let dfl = document.createElement('a');
+        dfl.href = 'data:attachment/text,' + encodeURI('{"Records":[]"Publickey": {}}');
+        dfl.target = '_blank';
+        dfl.download = 'vault.json';
+        dfl.click();
+      
+      }
+      
+      // Add Event Listeners        
+      $f = async () => {
+        let files = $id("pwf").files
+        
+        if (files.length != 0) {
+          let r = new FileReader();          
+          r.onload = (e) => { decryptF(e) };          
+          r.onerror = (e) => alert(e.target.error.name);          
+          r.readAsText(files[0]);
+        }
+      
+      }
+      $id("pwf").addEventListener('change', $f);
+      
+      $qs(".pbkdf2 .encrypt-button").addEventListener("click", encryptF);
+
+    })();
+
+
+
+
+
+
+
+// example
+    /*
+    ;(async () => {
+      // encrypt
+      const encrypted = await encrypt('Secret text', 'password')
+    
+      // the cipher text
+      console.log(
+        String.fromCharCode.apply(null, new Uint8Array(encrypted.cipherText))
+      )
+    
+      // decrypt it
+      const decrypted = await decrypt(encrypted, 'password')
+      console.log(decrypted) // Secret text
+    })()
+    
+    var textToSave = document.getElementById('txt').innerHTML;
+  var hiddenElement = document.createElement('a');
+
+  hiddenElement.href = 'data:attachment/text,' + encodeURI(textToSave);
+  hiddenElement.target = '_blank';
+  hiddenElement.download = 'myFile.txt';
+  hiddenElement.click();
+}
+    
+    */
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,9 @@
+{"Records":[
+ {"Name":"Google","URL":"https//google.com/","Account":"myacct@google.com","Password":"ABC123","Desc":"My Google Password"},
+ {"Name":"Yahoo","URL":"https//google.com/","Account":"myacct@google.com","Password":"ABC123","Desc":"My Google Password"},
+ {"Name":"LinkedIn","URL":"https//google.com/","Account":"myacct@google.com","Password":"ABC123","Desc":"My Google Password"},
+ {"Name":"This","URL":"https//google.com/","Account":"myacct@google.com","Password":"ABC123","Desc":"My Google Password"},
+ {"Name":"That","URL":"https//google.com/","Account":"myacct@google.com","Password":"ABC123","Desc":"My Google Password"}
+],
+"Publickey": {}
+}
