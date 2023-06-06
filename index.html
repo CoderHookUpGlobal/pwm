@@ -5,10 +5,9 @@
   <title>On and Offline Password Manager</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/bulma9.4.css">
 </head>
-<style type="text/css">
 
-</style>
 
 <body>
   <section class="derive-key pbkdf2">
@@ -21,7 +20,7 @@
       <div class="ciphertext">Ciphertext:<span class="ciphertext-value"></span></div>
       <div class="decrypted">Decrypted:<span class="decrypted-value"></span></div>
 
-      <input class="encrypt-button" type="button" value="Encrypt">
+      <input class="button" type="button" value="Encrypt">
 
     </section>
   </section>
@@ -51,7 +50,7 @@
       const $id = (id) => document.getElementById(id)
       const $cr = (t, opt) => document.createElement(t, opt)
       const $qs = (q) => document.querySelector(q)
-            
+
       function getKeyMaterial() {
         // TODO Create Password Display
         let password = window.prompt("Enter your password");
@@ -79,14 +78,14 @@
           ["encrypt", "decrypt"]
         );
       }
-      
+
       function getData() {
         // TODO Get The JSON
         let message = $qs("#pbkdf2-message").value;
         let enc = new TextEncoder();
         return enc.encode(message);
       }
-      
+
       async function encryptF() {
 
         // Create the Salt and IV
@@ -113,7 +112,7 @@
         dfl.download = 'password.vault';
         dfl.click();
       }
-           
+
       async function decryptF(e) {
 
         // Decode the Vault File
@@ -135,13 +134,13 @@
       }
 
       function decodeF(file) {
-        
+
         // Parse the Vault File's JSON
         let vjs = JSON.parse(file)
 
         // Create an Array of the JSON Elements to Decode
         let dc = ["iv", "data", "salt"]
-        
+
         // Decode
         for (let k of dc) {
           let string = window.atob(vjs[k])
@@ -152,34 +151,34 @@
           }
           vjs[k] = buffer
         }
-        
+
         return vjs
       }
 
       function CreateNewPasswordFile() {
-        
+
         let dfl = document.createElement('a');
         dfl.href = 'data:attachment/text,' + encodeURI('{"Records":[]"Publickey": {}}');
         dfl.target = '_blank';
         dfl.download = 'vault.json';
         dfl.click();
-      
+
       }
-      
+
       // Add Event Listeners        
       $f = async () => {
         let files = $id("pwf").files
-        
+
         if (files.length != 0) {
-          let r = new FileReader();          
-          r.onload = (e) => { decryptF(e) };          
-          r.onerror = (e) => alert(e.target.error.name);          
+          let r = new FileReader();
+          r.onload = (e) => { decryptF(e) };
+          r.onerror = (e) => alert(e.target.error.name);
           r.readAsText(files[0]);
         }
-      
+
       }
       $id("pwf").addEventListener('change', $f);
-      
+
       $qs(".pbkdf2 .encrypt-button").addEventListener("click", encryptF);
 
     })();
