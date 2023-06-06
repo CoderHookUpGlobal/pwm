@@ -4,4 +4,3 @@
 
 ![HookUpGlobal logo](/assets/img/HookUpGlobal.png)
 
-
