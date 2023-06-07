@@ -40,3 +40,24 @@ Tip: When viewing a conversation, you can automatically quote text in a comment 
 
 Quoting Code
 
+You can call out code or a command within a sentence with single backticks. The text within the backticks will not be formatted. You can also press the Command+E (Mac) or Ctrl+E (Windows/Linux) keyboard shortcut to insert the backticks for a code block within a line of Markdown.
+
+Use `git status` to list all new or modified files that haven't yet been committed.
+Screenshot of rendered GitHub Markdown showing the appearance of characters surrounded by backticks. The words "git status" appear in a fixed-width typeface, highlighted in light gray.
+
+To format code or text into its own distinct block, use triple backticks.
+
+Some basic Git commands are:
+```
+git status
+git add
+git commit
+```
+Screenshot of rendered GitHub Markdown showing a code block. The words "git status," "git add," and "git commit" appear in a fixed-width typeface, highlighted in light gray.
+
+For more information, see "Creating and highlighting code blocks."
+
+If you are frequently editing code snippets and tables, you may benefit from enabling a fixed-width font in all comment fields on GitHub. For more information, see "About writing and formatting on GitHub."
+
+https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#supported-color-models
+
