@@ -16,14 +16,11 @@
     background-color: rgb(43, 43, 43);
   }
 
-
-  
-
-   .menu {   
+  .menu {
     width: 835px;
     margin: auto;
     /*border:solid #c2c2c2; */
-   }
+  }
 
   .container {
     display: grid;
@@ -34,40 +31,44 @@
     display: grid;
     grid-template-columns: auto auto auto auto auto;
     grid-gap: 5px;
-     
+
   }
-  
+
   .menu-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    margin-right: 10px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
 
 
-  
-  
+
+
 
   @media screen and (min-width:250px) and (max-width:480px) {
     section {
       grid-template-columns: repeat(1, 1fr);
     }
+
     p {
       display: none;
     }
+
     .rec {
       margin-top: 15px;
     }
   }
 
 
-  .rec {   
+  .rec {
     width: 75px;
     border-color: rgba(76, 0, 255, 0.361);
     background-color: rgb(64, 88, 95);
   }
+
   .rec:hover {
     color: rgb(13, 13, 13);
     background-color: rgb(154, 180, 187);
@@ -84,71 +85,66 @@
     overflow-wrap: break-word;
 
   }
- 
-  section> p {
-    height: 25px;
+
+  section>p {
     text-align: center;
-    border: solid whitesmoke;
-    border-width: 1px;
-  color:#FFF;
-  
+    border-bottom: solid whitesmoke;
+    color: #FFF;
+
   }
-  
+
   #pwf {
     display: none;
   }
+
   .nav {
-  box-sizing: content-box;
-  width: 25px;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  border-top: 4px solid #c2c2c2;
-  border-bottom: 4px solid #c2c2c2;
-}
-.nav:before {
-  content: "";
-  display: block;
-  width: 100%;
-  height: 4px;
-  background-color: #c2c2c2;
-}
+    box-sizing: content-box;
+    width: 25px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-top: 4px solid #c2c2c2;
+    border-bottom: 4px solid #c2c2c2;
+  }
 
-.menu-content a {
-  color: black;
-  padding-bottom: 5px;  
-  text-decoration: none;
-  display: block;
-}
+  .nav:before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color: #c2c2c2;
+  }
 
+  .menu-content a {
+    color: black;
+    padding-bottom: 5px;
+    text-decoration: none;
+    display: block;
+  }
 
-.menu:hover .menu-content {display:block;}
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.menu:hover .dropbtn {background-color: #3e8e41;}
-
+  /*
+  .menu:hover .menu-content {
+    display: block;
+  }
+ */
+  .menu-content a:hover {
+    background-color: #ddd;
+  }
 </style>
 
 <body>
   <input id="pwf" type="file">
   <div class="menu">
     <div class="nav">
-    
-  </div> 
-  <div class="menu-content">   
-    <a href="#" id="lpw">Load</a>
-    <a href="#" id="enc">Download</a>
-    <a href="#" id="new">New</a>
-    <a href="#" id="apw">Add Password</a>  
-</div>
-</div>
-  
-  <div class="container">
-    
-    
-     
 
+    </div>
+    <div class="menu-content">
+      <a href="#" id="lpw">Load</a>
+    </div>
+  </div>
+
+  <div class="container">
     <section>
-      <p >ID</p>
+      <p>ID</p>
       <p>User</p>
       <p>Site</p>
       <p>Password</p>
@@ -180,6 +176,8 @@
     const $id = (id) => document.getElementById(id)
     const $cr = (t, opt) => document.createElement(t, opt)
     const $qs = (q) => document.querySelector(q)
+
+
 
     function getKeyMaterial() {
       // TODO Create Password Display
@@ -292,9 +290,35 @@
       dfl.click();
 
     }
+    // Add Event Listeners and Handlers
 
-    // Add Event Listeners and Handlers       
+    // Menu Section
+    /*
     
+      <a href="#" id="enc">Download</a>
+      <a href="#" id="new">New</a>
+      <a href="#" id="apw">Add Password</a>
+    */
+    let vault_is_loaded = 0;
+    function menu() {
+
+      mi = $qs(".menu-content");
+
+      mi.style.display = "block";
+      if (vault_is_loaded) {
+      mi.innerHTML = `
+      <a href="#" id="lpw">Load</a>
+      <a href="#" id="anp">Add New Password</a>
+      <a href="#" id="enc">Download</a>      
+      <a href="#" id="apw">Change Master Password</a>
+      <a href="#" id="new">Create New Vault</a>
+      `
+      }    
+
+    }
+    $qs(".menu").addEventListener("click", menu)
+
+    $qs(".menu-content").addEventListener("mouseleave", () => { $qs(".menu-content").style.display = "none" });
 
 
     function loadVault() {
@@ -302,16 +326,19 @@
 
       if (files.length != 0) {
         let r = new FileReader();
-        r.onload = (e) => { decryptF(e) };
-        r.onerror = (e) => alert(e.target.error.name);
-        r.readAsText(files[0]);
+        r.onload = (e) => {
+          decryptF(e)
+          vault_is_loaded = 1
+        }
+        r.onerror = (e) => alert(e.target.error.name)
+        r.readAsText(files[0])
       }
-
+      
     }
     $id("lpw").addEventListener("click", () => { $id("pwf").click() })
     $id("pwf").addEventListener('change', loadVault);
 
-    $id("enc").addEventListener("click", encryptF);
+    //$id("enc").addEventListener("click", encryptF);
 
   })();
 
