@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         #grid {
             display: grid;
@@ -31,8 +33,6 @@
 
         #main {
             grid-area: main;
-
-            justify-content: start;
         }
 
         #main,
@@ -44,7 +44,7 @@
             grid-area: foot;
             height: 5vh;
         }
-        
+
         .hide {
             display: none;
         }
@@ -60,20 +60,17 @@
 <body>
     <div id="grid">
         <!-- Row 1-->
-        <div id="head"><a  id="open" class="title" onclick="m()">&gt;&gt;&gt;</a>
-                       <a  id="close" class="title hide" onclick="m()">&lt;&lt;&lt;</a>
+        <div id="head"><a id="open" class="title" onclick="m()">&gt;&gt;&gt;</a>
+            <a id="close" class="title hide" onclick="m()">&lt;&lt;&lt;</a>
         </div>
         <!-- Row 2-->
         <div id="side">
-        
-        <ul id="menuItems" class="hide">
-            <li>Load </li>
-            <li>Load </li>
-            <li>Load </li>
-            <li>Load </li>
-        </ul>
-            
-        
+            <ul id="menuItems" class="hide">
+                <li>Load </li>
+                <li>Load </li>
+                <li>Load </li>
+                <li>Load </li>
+            </ul>
         </div>
         <div id="main">3</div>
         <!-- Row 3-->
@@ -82,25 +79,23 @@
 </body>
 <script>
     const $id = (id) => document.getElementById(id)
-    const $cr = (t, opt) => document.createElement(t, opt)
-    const $qs = (q) => document.querySelector(q)
 
     function m() {
-        if($id("open").classList.contains("hide")) {
+        if ($id("open").classList.contains("hide")) {
             $id("menuItems").classList.toggle("hide")
             $id("grid").style.gridTemplateColumns = "0vw auto"
-            
+
         }
         else {
             $id("grid").style.gridTemplateColumns = "10vw auto"
-            setTimeout(() => {      
-            $id("menuItems").classList.toggle("hide")
-         }, "300");     
+            setTimeout(() => {
+                $id("menuItems").classList.toggle("hide")
+            }, "300");
         }
         $id("open").classList.toggle("hide")
         $id("close").classList.toggle("hide")
-        
-        
+
+
     }
 </script>
 
