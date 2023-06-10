@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+body {
+  font-family: sans-serif;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+aside {
+  width: 200px;
+  background: #111;
+  color: #fff;
+  transition: width 1s;
+}
+
+.no-aside {
+  width: 0px;
+}
+
+main {
+  background: #eee;
+}
+
+h1,
+p {
+  margin: 1rem;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.toggle {
+  width: 40px;
+  height: 40px;
+  display: block;
+  position: relative;
+  margin-top: 1rem;
+}
+.hide {
+    display: none;
+}
+.toggle i,
+.toggle i::after,
+.toggle i::before {
+  position: absolute;
+  width: 40px;
+  height: 4px;
+  border-radius: 4px;
+  transition: transform 0.15s;
+  background-color: #fff;
+}
+
+.toggle i {
+  top: 46%;
+  left: 18%;
+  display: block;
+  background: #eee;
+}
+
+.toggle i::before {
+  top: -10px;
+}
+
+.toggle i::after {
+  bottom: -10px;
+}
+
+.toggle i::after,
+.toggle i::before {
+  content: "";
+  display: block;
+}
+
+.toggle i::before {
+  transform: translate3d(-8px, 0, 0) rotate(-45deg) scale(0.7, 1);
+}
+
+.toggle i::after {
+  transform: translate3d(-8px, 0, 0) rotate(45deg) scale(0.7, 1);
+}
+
+.no-aside .toggle i::before,
+.no-aside .toggle i::after {
+  transform: none;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <aside id="menu" class="no-aside">    
+    <p id="close" class="hide" onclick="c()">&lt;&lt;&lt;</p>    
+</aside>
+      <main>
+        
+        <p id="open" onclick="c()">&gt;&gt;&gt;</p>
+      </main>
+</body>
+
+<script>
+    const $id = (id) => document.getElementById(id)
+    const $cr = (t, opt) => document.createElement(t, opt)
+    const $qs = (q) => document.querySelector(q)
+    
+    function c() {       
+        
+        $id("menu").classList.toggle('no-aside')
+        
+        if ($id('open').classList.contains("hide")) {
+            $id('close').classList.toggle('hide')
+            setTimeout(() => {            
+            $id('open').classList.toggle('hide')
+         }, "1000");        
+        }
+        else {
+            $id('open').classList.toggle('hide')
+            setTimeout(() => {      
+            $id('close').classList.toggle('hide')
+         }, "1000");        
+        }        
+    }
+  
+    
+ 
+  document.querySelector('.toggle').addEventListener('click',c)
+</script>
+
+</html>
