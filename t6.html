@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <style>
+        #grid {
+            display: grid;
+            transition: 300ms;
+            grid-template-columns: 0vw auto;
+            grid-template-areas:
+                "head head"
+                "side main"
+                "foot foot";
+        }
+
+        #grid>div {
+            border: solid;
+        }
+
+        #head {
+            grid-area: head;
+            height: 5vh;
+        }
+
+        #side {
+            grid-area: side;
+
+        }
+
+        #main {
+            grid-area: main;
+
+            justify-content: start;
+        }
+
+        #main,
+        #side {
+            height: 85vh;
+        }
+
+        #foot {
+            grid-area: foot;
+            height: 5vh;
+        }
+        
+        .hide {
+            display: none;
+        }
+
+        .title {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bolder;
+            font-size: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="grid">
+        <!-- Row 1-->
+        <div id="head"><a  id="open" class="title" onclick="m()">&gt;&gt;&gt;</a>
+                       <a  id="close" class="title hide" onclick="m()">&lt;&lt;&lt;</a>
+        </div>
+        <!-- Row 2-->
+        <div id="side">
+        
+        <ul id="menuItems" class="hide">
+            <li>Load </li>
+            <li>Load </li>
+            <li>Load </li>
+            <li>Load </li>
+        </ul>
+            
+        
+        </div>
+        <div id="main">3</div>
+        <!-- Row 3-->
+        <div id="foot">4</div>
+    </div>
+</body>
+<script>
+    const $id = (id) => document.getElementById(id)
+    const $cr = (t, opt) => document.createElement(t, opt)
+    const $qs = (q) => document.querySelector(q)
+
+    function m() {
+        if($id("open").classList.contains("hide")) {
+            $id("menuItems").classList.toggle("hide")
+            $id("grid").style.gridTemplateColumns = "0vw auto"
+            
+        }
+        else {
+            $id("grid").style.gridTemplateColumns = "10vw auto"
+            setTimeout(() => {      
+            $id("menuItems").classList.toggle("hide")
+         }, "300");     
+        }
+        $id("open").classList.toggle("hide")
+        $id("close").classList.toggle("hide")
+        
+        
+    }
+</script>
+
+</html>
