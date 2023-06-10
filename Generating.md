@@ -1,11 +1,7 @@
 # Suggestions on How to Create a Strong Password Accdg to Techie Gurus
 
-<<<<<<< HEAD
 
 ![HookUpGlobal logo](/assets/img/images.jpg)
-=======
-![image.png]https://github.com/CoderHookUpGlobal/pwm/blob/doc_dev/assets/img/images%20(1).jpg
->>>>>>> 95152d6ee1f6fbf77a88176813cb354bda91e06d
 
 # A good password consists of two elements: strength and memorability.A hacker or computer can easily guess a weak password. 
       
