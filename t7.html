@@ -3,8 +3,9 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>title</title>
-
+    <title>PWM</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -98,6 +99,56 @@
         .right {
             flex: 1;
         }
+
+        .menu-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    margin-right: 10px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+
+
+
+
+  @media screen and (min-width:250px) and (max-width:480px) {
+    #content {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    .title {
+
+font-weight: bold;
+font-size: 1rem;
+color: azure;
+}
+
+    .th {
+      display: none;
+    }
+
+    .rec {
+      margin-top: 15px;
+    }
+  }
+
+
+  .rec {
+    width: 75px;
+    border-color: rgba(76, 0, 255, 0.361);
+    background-color: rgb(64, 88, 95);
+  }
+
+  .rec:hover {
+    color: rgb(13, 13, 13);
+    background-color: rgb(154, 180, 187);
+    border-color: rgba(0, 115, 255, 0.822);
+  }
+
+
+
     </style>
 </head>
 
@@ -119,13 +170,13 @@
                 </div>
             </div>
             <div id="content">
-
+                <div class="th">
                 <p>ID</p>
                 <p>User</p>
                 <p>Site</p>
                 <p>Password</p>
                 <p>Description</p>
-
+             </div>
                 <div class="rec">addd</div>
                 <div>v</div>
                 <div>v</div>
