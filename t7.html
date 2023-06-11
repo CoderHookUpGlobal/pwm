@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>title</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: rgb(62, 62, 62);
+        }
+
+        #grid {
+            display: grid;
+            grid-template-columns: auto;
+        }
+
+        #app {
+            height: 95vh;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            grid-template-rows: 5vh 95vh;
+
+        }
+
+        #menuitems {
+            display: grid;
+            grid-template-columns: auto;
+            justify-items: center;
+            
+        }
+
+        #menu {
+            grid-area: "menu";
+            width: 0px;
+            height: 100vh;
+            background-color: rgb(193, 193, 177);
+            transition: width 500ms;
+            overflow: hidden;
+            justify-items: center;
+        }
+
+        #head {
+            border: solid limegreen;
+            margin: 0px;
+            padding-left: 10px;
+            padding-right: 10px;
+            display: flex;
+            align-items: center;
+
+        }
+
+        
+
+        #content {
+            padding: 5px;
+            display: grid;
+            grid-template-columns: repeat(5, 100px);
+            justify-content: center;
+        }
+
+        #content>div {
+            text-align: center;            
+            color: rgb(255, 255, 255);
+            border-style: solid;
+            border-color: rgba(255, 0, 0, 0.361);
+            border-radius: 4px;
+            overflow-wrap: break-word;
+
+        }
+
+        .title {
+
+            font-weight: bolder;
+            font-size: 1.5rem;
+            color: azure;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        #contact {
+            text-align: right;
+        }
+
+        .link {
+            font-size: 1.5rem;
+            font-weight: bolder;
+            color: rgb(33, 36, 36);
+            margin: 5px;
+        }
+        .link:hover {
+            color:lime;
+        }
+        .left,
+        .right {
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="grid">
+        <!--Row 1-->
+        <div id="head"><span class="left">
+                <p id="close" class="title hide" onclick="c()">&lt;&lt;&lt;</p>
+                <p id="open" class="title" onclick="c()">&gt;&gt;&gt;</p>
+            </span>
+            <p class="title center">HookUpGlobal</p>
+            <p class="title right" id="contact">Contact</p>
+        </div>
+        <!--Row 2-->
+        <div id="app">
+            <div id="menu">
+                <div id="menuitems">
+                    <a class="link" href="#">Load</a>
+                </div>
+            </div>
+            <div id="content">
+
+                <p>ID</p>
+                <p>User</p>
+                <p>Site</p>
+                <p>Password</p>
+                <p>Description</p>
+
+                <div class="rec">addd</div>
+                <div>v</div>
+                <div>v</div>
+                <div>v</div>
+                <div>42</div>
+                <div class="rec">addd</div>
+                <div>v</div>
+                <div>v</div>
+                <div>v</div>
+                <div>42</div>
+                <div class="rec">addd</div>
+                <div>v</div>
+                <div>v</div>
+                <div>v</div>
+                <div>42</div>
+
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const $ = (id) => document.getElementById(id)
+
+    function c() {
+        // If the Menu is Closed
+        if ($("close").classList.contains("hide")) {
+            $("menu").style.width = "200px"
+        }
+        else {
+            $("menu").style.width = "0px"
+        }
+
+        $("open").classList.toggle("hide")
+        $("close").classList.toggle("hide")
+    }
+</script>
+
+</html>
