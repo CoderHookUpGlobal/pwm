@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .parent {
+display: grid;
+grid-template-columns:  20vw,80vw;
+grid-template-rows: min-content max-content;
+grid-column-gap: 0px;
+grid-row-gap: 0px;
+align-items: center;
+}
+
+.head { 
+    grid-area: 1 / 1 / 2 / 3;
+    height: 5vh;
+
+}
+.mex { 
+    background-color: #333; 
+    width:mix-content;
+    grid-area: 2 / 1 / 3 / 2;
+
+}
+.content {
+    background-color: #8e7c7c; 
+     
+    grid-area: 2 / 2 / 3 / 3; 
+}
+.mex,.content {
+    height:95vh;
+    border:solid;
+}
+/* ******************************* */
+
+body {
+  font-family: sans-serif;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  margin: 0;
+
+}
+
+aside {
+  width: 200px;
+ 
+  color: #fff;
+  transition: width 1s;
+}
+
+.no-aside {
+  width: 0px;
+}
+
+main {
+  background: #eee;
+}
+
+h1,
+p {
+  margin: 1rem;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.toggle {
+  width: 40px;
+  height: 40px;
+  display: block;
+  position: relative;
+  margin-top: 1rem;
+}
+.hide {
+    display: none;
+}
+.toggle i,
+.toggle i::after,
+.toggle i::before {
+  position: absolute;
+  width: 40px;
+  height: 4px;
+  border-radius: 4px;
+  transition: transform 0.15s;
+  background-color: #fff;
+}
+
+.toggle i {
+  top: 46%;
+  left: 18%;
+  display: block;
+  background: #eee;
+}
+
+.toggle i::before {
+  top: -10px;
+}
+
+.toggle i::after {
+  bottom: -10px;
+}
+
+.toggle i::after,
+.toggle i::before {
+  content: "";
+  display: block;
+}
+
+.toggle i::before {
+  transform: translate3d(-8px, 0, 0) rotate(-45deg) scale(0.7, 1);
+}
+
+.toggle i::after {
+  transform: translate3d(-8px, 0, 0) rotate(45deg) scale(0.7, 1);
+}
+
+.no-aside .toggle i::before,
+.no-aside .toggle i::after {
+  transform: none;
+}
+    
+    
+    </style>
+</head>
+
+<body>
+
+    <div class="parent">
+        <div class="head">  
+            <p id="open" onclick="c()">&gt;&gt;&gt;</p> 
+            <p id="close" class="hide" onclick="c()">&lt;&lt;&lt;</p>    
+        </div>
+        <div class="mex">            
+            <aside id="aside" class="no-aside">    
+                <ul>
+                    <li>Home</li>
+                </ul>
+            </aside>       
+        </div>
+        <div class="content">c </div>
+        </div>
+
+</body>
+<script>
+    const $id = (id) => document.getElementById(id)
+    const $cr = (t, opt) => document.createElement(t, opt)
+    const $qs = (q) => document.querySelector(q)
+    
+    function c() {       
+        
+        $id("aside").classList.toggle('no-aside')
+        
+        if ($id('open').classList.contains("hide")) {
+            $id('close').classList.toggle('hide')
+            setTimeout(() => {            
+            $id('open').classList.toggle('hide')
+         }, "1000");        
+        }
+        else {
+            $id('open').classList.toggle('hide')
+            setTimeout(() => {      
+            $id('close').classList.toggle('hide')
+         }, "1000");        
+        }        
+    }
+  
+    
+ 
+  document.querySelector('.toggle').addEventListener('click',c)
+</script>
+
+</html>
