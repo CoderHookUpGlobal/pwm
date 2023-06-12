@@ -49,7 +49,7 @@
 
 
   @media screen and (min-width:250px) and (max-width:480px) {
-    section {
+    #content {
       grid-template-columns: repeat(1, 1fr);
     }
 
@@ -116,9 +116,9 @@
 
   .menu-content a {
     color: black;
-    padding-bottom: 5px;
-    text-decoration: none;
-    display: block;
+    padding: 5px;
+    
+    display: flex;
   }
 
   /*
@@ -138,7 +138,7 @@
 
     </div>
     <div class="menu-content">
-      <a href="#" id="lpw">Load</a>
+      
     </div>
   </div>
 
@@ -316,9 +316,9 @@
       }    
 
     }
-    $qs(".menu").addEventListener("click", menu)
+    $qs(".menu").addEventListener("pointereover", menu)
 
-    $qs(".menu-content").addEventListener("mouseleave", () => { $qs(".menu-content").style.display = "none" });
+    $qs(".menu-content").addEventListener("pointerleave", () => { $qs(".menu-content").style.display = "none" });
 
 
     function loadVault() {
@@ -333,7 +333,7 @@
         r.onerror = (e) => alert(e.target.error.name)
         r.readAsText(files[0])
       }
-      
+
     }
     $id("lpw").addEventListener("click", () => { $id("pwf").click() })
     $id("pwf").addEventListener('change', loadVault);

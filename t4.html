@@ -1,88 +1,118 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="UTF-8" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-body {
-  font-family: sans-serif;
-}
+  <meta charset="UTF-8" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    
+    #grid {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
 
-#grid {  
-  display: grid;
-  grid-template-columns: min-content 1fr;
-     
-}
+    aside {
+      width: 30vw;
+      background: #111;
+      color: #fff;
+      transition: width 5s;
+    }
 
-aside {
-  width: 200px;
-  background: #111;
-  color: #fff;
-  transition: width 1s;
-}
+    .no-aside {
+      width: 0px;
+      overflow: scroll;
+    }
+    
+    h1,
+    p {
+      margin: 1rem;
+    }
 
-.no-aside {
-  width: 0px;
-}
+    p {
+      font-size: 1.2rem;
+      color: #333;
+    }
+    .hide {
+      display: none;
+    }
 
-main {
-  background: #eee;
-  height:95vh;
-}
+    #head {
+      border: dotted;
+      height: 5vh;
+      grid-column: span 2;
+      display: flex;
+      align-items: center;
 
-h1,
-p {
-  margin: 1rem;
-}
+    }
 
-p {
-  font-size: 1.2rem;
-  color: #333;
-}
+    #main {
+      display: flex;
+      border: dotted;
+      height: 95vh;
+      width: auto;
+      background-color: #333;
+    }
 
+    .left,
+    .right {
+      flex: 1;
+    }
 
-.hide {
-    display: none;
-}
-
-#head {
-  border: dotted;
-  height: 5vh;
-  grid-column: span 2;
-}
-
-
-    </style>
+    #contact {
+      text-align: right;
+    }
+  </style>
 </head>
+
 <body>
   <div id="grid">
-  <!-- Row  1 -->
-<div id="head"><p id="close" class="hide" onclick="c()">&lt;&lt;&lt;</p><p id="open" onclick="c()">&gt;&gt;&gt;</p></div>
+    <!-- Row  1 -->
+    <div id="head">
+      <span class="left">
+        <p id="close" class="hide" onclick="c()">&lt;&lt;&lt;</p>
+        <p id="open" onclick="c()">&gt;&gt;&gt;</p>
+      </span>
+      <p class="center">HookUpGlobal</p>
+      <p class="right" id="contact">Contact</p>
+    </div>
     <!-- Row 2 -->
-  <aside id="menu" class="no-aside">    
-    
-    <ul>
-      <li>Home</li>
-  </ul>
-</aside>
-      <main>        
-        
-      </main>
-    </div>  
+    <div id="main">
+      <aside id="menu" class="no-aside">
+        <div id="items" class="">
+          <ul>
+            <li>Home</li>
+          </ul>
+        </div>
+      </aside>
+      <div>Hello</div>
+    </div>
+  </div>
 </body>
 
 <script>
-    const $id = (id) => document.getElementById(id)
-    const $cr = (t, opt) => document.createElement(t, opt)
-    const $qs = (q) => document.querySelector(q)
-    
-    function c() {       
-        $id("menu").classList.toggle('no-aside')
-        $id("open").classList.toggle("hide")
-        $id("close").classList.toggle("hide")                
+  const $id = (id) => document.getElementById(id)
+  const $cr = (t, opt) => document.createElement(t, opt)
+  const $qs = (q) => document.querySelector(q)
+
+  function c() {
+
+    if ($id("open").classList.contains("hide")) {
+      //$id("menu").classList.toggle("hide")
     }
-  
+    else {
+     // setTimeout(() => {
+     //   $id("menuItems").classList.toggle("hide")
+     //   $id("menuItems").classList.toggle("pad")
+     // }, "1");
+    }
+
+    $id("menu").classList.toggle('no-aside')
+    $id("open").classList.toggle("hide")
+    $id("close").classList.toggle("hide")
+
+  }
+
 </script>
 
 </html>

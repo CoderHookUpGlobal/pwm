@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>title</title>
+<style>
+
+nav {
+    display: grid;
+    grid-template-columns: min-content 80vw;
+    border: solid;
+    height: 5vh;
+    align-items: center;
+    padding-left: 5px;
+  
+}
+.hide {
+    visibility: hidden;
+}
+
+.title {
+    font-family: Arial, Helvetica, sans-serif;    
+    font-weight: bolder;
+    font-size: 24px;
+}
+
+#menu {
+  width: 10px;
+  height: 100px;
+  background: red;
+  transition: width 2s;    
+}
+.span2 {
+    grid-column: span ;
+}
+
+#content {
+ display: block; 
+ border: solid;  
+}
+#main {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    height: 95vh;
+    border: solid;
+}
+
+.sidebar {
+	transition: 1s;
+	translate: -100%;
+	padding: 0.5rem 1rem;
+
+	background-color: var(--foreground);
+	color: var(--background);
+	max-width: 10rem;
+	min-height: 100vh;
+}
+.hamburger-menu:has(input:checked) + .sidebar {
+	translate: 0;
+}
+
+</style>
+</head>
+<body>
+<nav>
+    <div>
+        <span class="title" id="hmb">&gt;&gt;&gt;</span>
+        <span class="title hide" id="close">&lt;&lt;&lt;</span>
+    </div>
+    <div class="title" id="logo">asdf</div>
+</nav>
+<div id="main">
+    <div>
+    <label class="hamburger-menu">
+        <input id="input" class="hide" type="checkbox" />
+    </label>
+    
+    <aside class="sidebar">
+        <nav>
+            <div>This</div>
+            <div>Is</div>
+            <div>The</div>
+            <div>Sidebar</div>
+        </nav>
+    
+    </aside>
+</div>
+    <div    id="content">
+        THis is my main Box
+    </div>
+</div>    
+</body>
+<script>
+     (() => {
+
+const $id = (id) => document.getElementById(id)
+const $cr = (t, opt) => document.createElement(t, opt)
+const $qs = (q) => document.querySelector(q)
+
+  
+
+
+$nav_action = async () => {
+  
+  $id("hmb").classList.toggle("hide")   
+  $id("close").classList.toggle("hide")
+  // Slowly reduce the width
+  
+  let i = document.getElementById("input");
+	i.checked = !i.checked;
+   
+  //$id("menu").classList.toggle("hide")  
+  
+  $id("content").classList.toggle("span2")
+  
+}
+$qs("nav").addEventListener("click", $nav_action)
+
+}
+
+)()
+</script>
+</html>

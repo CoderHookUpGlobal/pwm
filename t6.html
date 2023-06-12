@@ -7,52 +7,69 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+         
         #grid {
-            display: grid;
-            transition: 300ms;
+            display: grid;           
             grid-template-columns: 0vw auto;
             grid-template-areas:
                 "head head"
-                "side main"
-                "foot foot";
+                "side main";
         }
 
-        #grid>div {
+        #grid > div {
             border: solid;
         }
 
         #head {
-            grid-area: head;
+            grid-area: head;             
+           display:grid;
+           grid-template-columns: auto auto auto;          
             height: 5vh;
         }
 
         #side {
             grid-area: side;
-
-        }
-
+            
+        }        
         #main {
             grid-area: main;
         }
-
+        .pad {
+            padding:10px;
+        }
         #main,
-        #side {
-            height: 85vh;
+        #side {             
+            height: 85vh;            
         }
 
-        #foot {
-            grid-area: foot;
-            height: 5vh;
-        }
+         
 
         .hide {
             display: none;
         }
-
+        #contact {
+            border: dotted;                        
+            text-align: center;
+        }
+        #logo {            
+            border: dotted;                        
+            text-align: center;                      
+        }
+        #menuItems {      
+            
+            justify-self: center;           
+            
+        }
+        #menuAction {      
+            
+            grid-column-start: 1;
+            border:dotted;
+            
+        }
         .title {
             font-family: Arial, Helvetica, sans-serif;
             font-weight: bolder;
-            font-size: 2rem;
+            font-size: 1.5rem;
         }
     </style>
 </head>
@@ -60,21 +77,26 @@
 <body>
     <div id="grid">
         <!-- Row 1-->
-        <div id="head"><a id="open" class="title" onclick="m()">&gt;&gt;&gt;</a>
-            <a id="close" class="title hide" onclick="m()">&lt;&lt;&lt;</a>
+        <div id="head">
+            <span id="menuAction">
+            <a id="open" class="title" onclick="m()">&gt;&gt;&gt;</a>
+            <a id="close" class="title hide" onclick="m()">&lt;&lt;&lt;</a>            
+            </span>
+            <span id="logo" class="title"><a href="#" >HookUpGlobal</a></span>
+            <span id="contact">Contact</span>
+          
         </div>
         <!-- Row 2-->
-        <div id="side">
-            <ul id="menuItems" class="hide">
-                <li>Load </li>
-                <li>Load </li>
-                <li>Load </li>
-                <li>Load </li>
-            </ul>
+        <div id="side" class="no-aside">                
+           <div id="menuItems" class="hide">
+            <div><a href="#">Load</a></div>  
+            <div><a href="#">Load</a></div>  
+            <div><a href="#">Load</a></div>  
+            <div><a href="#">Load</a></div>  
         </div>
-        <div id="main">3</div>
-        <!-- Row 3-->
-        <div id="foot">4</div>
+        </div>
+        <div id="main">Main</div>
+         
     </div>
 </body>
 <script>
@@ -86,11 +108,11 @@
             $id("grid").style.gridTemplateColumns = "0vw auto"
 
         }
-        else {
-            $id("grid").style.gridTemplateColumns = "10vw auto"
+        else {            
             setTimeout(() => {
                 $id("menuItems").classList.toggle("hide")
-            }, "300");
+                $id("menuItems").classList.toggle("pad")
+            }, "1");
         }
         $id("open").classList.toggle("hide")
         $id("close").classList.toggle("hide")
