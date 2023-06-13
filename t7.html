@@ -2,486 +2,535 @@
 <html>
 
 <head>
-    <meta charset="UTF-8" />
-    <title>PWM</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: rgb(62, 62, 62);
-        }
+  <meta charset="UTF-8" />
+  <title>PWM</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /*  * {
+      border: dotted !important;
+    }  */
 
-        #grid {
-            display: grid;
-            grid-template-columns: auto;
-        }
-
-        #app {
-            height: 95vh;
-            display: grid;
-            grid-template-columns: auto 1fr;
-            grid-template-rows: 5vh 95vh;
-
-        }
-
-        #menuitems {
-            display: grid;
-            grid-template-columns: auto;
-            justify-items: center;
-            
-        }
-
-        #menu {
-            grid-area: "menu";
-            width: 0px;
-            height: 100vh;
-            background-color: rgb(193, 193, 177);
-            transition: width 500ms;
-            overflow: hidden;
-            justify-items: center;
-        }
-
-        #head {
-            border: solid limegreen;
-            margin: 0px;
-            padding-left: 10px;
-            padding-right: 10px;
-            display: flex;
-            align-items: center;
-
-        }
-
-        
-
-        #content {
-            padding: 5px;
-            display: grid;
-            grid-template-columns: .5fr repeat(4, 1fr);
-            justify-content: stretch;
-            margin-right: 3rem; 
-            margin-left: 3rem; 
-            margin-top: 3rem;      
-             
-}      
-        
-
-        #content>div {
-            text-align: center;            
-            color: rgb(255, 255, 255);
-            border-style: solid;
-            border-color: limegreen;
-            border-radius: 4px;
-            overflow-wrap: break-word;
-            margin: .6rem;
-            
-        }
-
-        .title {
-
-            font-weight: bolder;
-            font-size: 1.5rem;
-            color: azure;
-        }
-
-        .hide {
-            display: none;
-        }
-
-        #contact {
-            text-align: right;
-        }
-
-        .link {
-            font-size: 1.5rem;
-            font-weight: bolder;
-            color: rgb(33, 36, 36);
-            margin: 5px;
-        }
-        .link:hover {
-            color:rgb(0, 98, 255);
-        }
-        .left,
-        .right {
-            flex: 1;
-        }
-
-        .menu-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    margin-right: 10px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-  }
-
-
-
-
-
-  @media screen and (min-width:250px) and (max-width:480px) {
-       
-    #content {
-      grid-template-columns: repeat(1, 1fr) !important;
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: rgb(62, 62, 62);
     }
-    
+
+
+    #menu {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #111;      
+      overflow-x: hidden;
+      transition: 500ms;
+    }
+
+
+    #action {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgb(167, 167, 167) !important;
+      z-index: 2;
+      cursor: pointer;
+    }
+
+    .form {}
+
+    #content {}
+
+    .th {
+      text-align: center;
+      color: rgb(255, 255, 255);
+      border-style: solid;
+      border-color: limegreen;
+      border-radius: 4px;
+      overflow-wrap: break-word;
+      height: 2rem;
+      line-height: 2rem;
+    }
+
     .title {
+      font-weight: bolder;
+      font-size: 1.5rem;
+      color: azure;
+      cursor: pointer;
+    }
 
-font-weight: bold;
-font-size: 1rem;
-color: azure;
-}
-
-    div.th {
+    .hide {
       display: none;
     }
 
-    .rec {
-      margin-top: 15px;
+     
+
+    .link {
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bolder;
+      color: rgb(39, 81, 144);
+      margin: .2rem;
     }
-  }
+
+    .link:hover {
+      color: rgb(0, 98, 255);
+    }
+
+    .left,
+    .right {
+      flex: 1;
+    }
+
+    .rec {
+
+      color: black !important;
+      background-color: rgb(190, 190, 190);
+    }
+
+    .rec:hover {
+      background-color: rgb(154, 180, 187);
+      border-color: rgba(0, 115, 255, 0.822);
+    }
+
+    button {
+      border-radius: 6px;
+      width: 100px;
+      height: 35px;
+    }
+
+    input[type=text] {
+      border-radius: 10px;
+      width: 220px;
+      height: 30px;
+    }
+
+    .no-border {
+      border: none !important;
+    }
+
+    #actionBar {
+      display: flex;
+      justify-content: center;
+    }
+
+    #grid {
+      margin: auto;
+      width: 90vw;
+    }
+
+    #head {
+      display: flex;
+    }
 
 
-  .rec {   
-    
-    color: black !important;
-    background-color: rgb(190, 190, 190);
-  }
+    #close {
+      text-align: right;
+      
+    }
 
-  .rec:hover {
-    background-color: rgb(154, 180, 187);
-    border-color: rgba(0, 115, 255, 0.822);
-  }
-   
- 
- button {
-    border-radius:6px;
-    width:100px;
-    height: 35px;
-}
-input[type=text]{
-  border-radius:10px;
-  width: 220px;
-  height: 30px;
-}
-.no-border {
-    border: none !important;
-}
-    </style>
+    #content {
+      
+      display: grid;
+      padding-top:50px;
+      grid-template-columns: .5fr repeat(4, 1fr);
+      grid-gap: .5rem;
+    }
+
+    @media screen and (min-width:250px) and (max-width:480px) {
+
+      #content {
+        grid-template-columns: repeat(1, 1fr) !important;
+      }
+
+      .title {
+
+        font-weight: bold;
+        font-size: 1rem;
+        color: azure;
+      }
+
+      p.th {
+        display: none;
+      }
+
+      .rec {
+        margin-top: 15px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <div id="grid">
-        <!--Row 1-->
-        <div id="head"><span class="left">
-                <p id="close" class="title hide" onclick="c()">&lt;&lt;&lt;</p>
-                <p id="open" class="title" onclick="c()">&gt;&gt;&gt;</p>
-            </span>
-            <p class="title center">HookUpGlobal</p>
-            <p class="title right" id="contact">Contact</p>
-            
-        </div>
-        
-        <!--Row 2-->
-        
-        <div id="app">
-            <div id="menu">
-                <div id="menuitems">
-                    <a class="link" href="#">Load</a>
-                </div>
-            </div>
-            
-            <div id="content">
-                
-                <div class="no-border"></div>
-                <div class="no-border"></div>
-                <div class="no-border"><input  type="text"><button>Search</button></div>
-                <div class="no-border"></div>
-                <div class="no-border"></div>
-            
-                
-                <div class="th" >Name</div>
-                <div class="th">Url</div>
-                <div class="th">User Name</div>                
-                <div class="th">Password</div>
-                <div class="th">Note</div>
-               
 
+  <div id="menu">
+    <div id="close" class="title">X</div>
+    <ul id="menuItems">    
+    <li class="link" id="lvlt">Load Vault</li>
+    <li class="link" id="lcvs">Import CSV</li>
+    <!-- After Load or Import -->
+    <li class="link" id="apsw">Add Password</li>
+    <li class="link" id="lcvs">Master Password</li>
+    <li class="link" id="lcvs">Save Vault</li>
+    </ul>
 
-            </div>
-        </div>
+  </div>
+
+  <div id="grid">
+
+    <div id="head">
+      <p id="open" class="title left">☰</p>
+      <p class="title center">HookUpGlobal</p>
+      <p class="title right" >About</p>
+
     </div>
+    <div id="actionBar">
+      <div class="no-border"><input type="text"><button>Search</button></div>
+    </div>
+
+    <div id="content">
+      <div class="th">Name</div>
+      <div class="th">Url</div>
+      <div class="th">User Name</div>
+      <div class="th">Password</div>
+      <div class="th">Note</div>
+    </div>
+  </div>
+  </div>
+
+
+  <div id="action" class="hide">
+    <div id="actionGrid">
+      <div class="form hide" id="loadVault">
+        <input id="pwf" type="file">
+      </div>
+
+      <div class="form hide" id="loadCSV">
+        <input id="pcsvf" type="file">
+      </div>
+
+      <div class="form hide" id="addPassword">
+        <label for="name" class="form">Name</label>
+        <input id="name" type="text" class="text">
+
+        <label for="url" class="form">URL</label>
+        <input id="url" type="text" class="text">
+
+        <label for="username" class="form">User Name</label>
+        <input id="username" type="text" class="text">
+
+
+        <label for="username" class="form">Password</label>
+        <div>
+          <p class="link">Generate</p>
+          <input type="text" class="text">
+        </div>
+
+
+
+        <label for="note" class="form">Note</label>
+        <input type="text" class="text" id="note">
+
+      </div>
+
+
+    </div>
+  </div>
 </body>
 <script>
+
+  (() => {
+
     const $ = (id) => document.getElementById(id)
 
-    function c() {
-        // If the Menu is Closed
-        if ($("close").classList.contains("hide")) {
-            $("menu").style.width = "200px"
+    // Import Vault
+    //$("pwf").addEventListener("change", (e) => { console.log(e) })
+    // Import CSV
+    //$("pcsvf").addEventListener("change", (e) => { console.log(e) })
+
+    // Load Vault
+    // $("lvlt").addEventListener("click", (e) => { console.log(e) })
+    // Load CSV
+    // $("lcvs").addEventListener("click", (e) => { console.log(e) })
+
+
+    $openMenu = () => {
+      // If the Menu is Closed
+      console.log("Clicked")
+      $("menu").style.width = "250px";
+      $("grid").style.marginLeft = "250px";
+
+    }
+
+    $closeMenu = () => {
+      // If the Menu is Closed
+      console.log("Clicked")
+      $("menu").style.width = "0px";
+      $("grid").style.margin = "auto";
+
+    }
+
+
+    $("open").addEventListener("click", $openMenu)
+
+    $("close").addEventListener("click", $closeMenu)
+
+    // Add Password
+    $addpass = () => {
+      // 
+
+      //$("action").classList.toggle("hide");
+      //$("addPassword").classList.toggle("hide");
+
+    }
+    $("apsw").addEventListener("click", $addpass)
+
+
+
+    const $id = (id) => document.getElementById(id)
+    const $cr = (t, opt) => document.createElement(t, opt)
+    const $qs = (q) => document.querySelector(q)
+
+
+
+    function getKeyMaterial() {
+      // TODO Create Password Display
+      let password = window.prompt("Enter your password");
+      let enc = new TextEncoder();
+      return window.crypto.subtle.importKey(
+        "raw",
+        enc.encode(password),
+        { name: "PBKDF2" },
+        false,
+        ["deriveBits", "deriveKey"]
+      );
+    }
+
+    function getKey(keyMaterial, salt) {
+      return window.crypto.subtle.deriveKey(
+        {
+          "name": "PBKDF2",
+          salt: salt,
+          "iterations": 1000000,
+          "hash": "SHA-256"
+        },
+        keyMaterial,
+        { "name": "AES-GCM", "length": 256 },
+        true,
+        ["encrypt", "decrypt"]
+      );
+    }
+
+    function getData() {
+      // TODO Get The JSON
+      let message = "this is the message => " + Date.now
+      let enc = new TextEncoder();
+      return enc.encode(message);
+    }
+
+    async function encryptF() {
+
+      // Create the Salt and IV
+      const salt = window.crypto.getRandomValues(new Uint8Array(16));
+      const iv = window.crypto.getRandomValues(new Uint8Array(12));
+
+      // Create the Encryption Key
+      let keyMaterial = await getKeyMaterial();
+      let key = await getKey(keyMaterial, salt);
+
+      // Encode the Data        
+      encrypted_data = await window.crypto.subtle.encrypt({ name: "AES-GCM", iv: iv }, key, getData());
+
+      // Prepare the Vault Information
+      const valut_data = window.btoa(String.fromCharCode.apply(null, new Uint8Array(encrypted_data)))
+      const vault_iv = window.btoa(String.fromCharCode.apply(null, new Uint8Array(iv)))
+      const vault_salt = window.btoa(String.fromCharCode.apply(null, salt))
+      const vault = JSON.stringify({ "data": valut_data, "iv": vault_iv, "salt": vault_salt })
+
+      // Download the Vault File
+      let dfl = $cr('a');
+      dfl.href = 'data:attachment/json,' + encodeURI(vault);
+      dfl.target = '_blank';
+      dfl.download = 'password.vault';
+      dfl.click();
+    }
+
+    async function decryptF(e) {
+
+      // Decode the Vault File
+      let f = decodeF(e.target.result)
+
+      // Create the PBKDF2 Key
+      let keyMaterial = await getKeyMaterial();
+      let key = await getKey(keyMaterial, f.salt);
+
+      // Decrypt the Vault Data or Report an Error
+      try {
+        let decrypted = await window.crypto.subtle.decrypt({ name: "AES-GCM", iv: f.iv }, key, f.data);
+        console.log(String.fromCharCode.apply(null, new Uint8Array(decrypted)));
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    function decodeF(file) {
+
+      // Parse the Vault File's JSON
+      let vjs = JSON.parse(file)
+
+      // Create an Array of the JSON Elements to Decode
+      let dc = ["iv", "data", "salt"]
+
+      // Decode
+      for (let k of dc) {
+        let string = window.atob(vjs[k])
+        const buffer = new ArrayBuffer(string.length)
+        const bufferView = new Uint8Array(buffer)
+        for (let i = 0; i < string.length; i++) {
+          bufferView[i] = string.charCodeAt(i)
         }
-        else {
-            $("menu").style.width = "0px"
+        vjs[k] = buffer
+      }
+
+      return vjs
+    }
+
+    function CreateNewPasswordFile() {
+
+      let dfl = document.createElement('a');
+      dfl.href = 'data:attachment/text,' + encodeURI('{"Records":[]"Publickey": {}}');
+      dfl.target = '_blank';
+      dfl.download = 'vault.json';
+      dfl.click();
+
+    }
+
+
+
+    function loadCVS() {
+      console.log("here")
+      $("action").classList.toggle("hide")
+      /* let files = $id("pwf").files
+  
+      if (files.length != 0) {
+        let r = new FileReader();
+        r.onload = (e) => {
+  
+        }
+        r.onerror = (e) => alert(e.target.error.name)
+        r.readAsText(files[0])
+      }
+  */
+    }
+
+    function loadVault() {
+      let files = $id("pwf").files
+
+      if (files.length != 0) {
+        let r = new FileReader();
+        r.onload = (e) => {
+          decryptF(e)
+          vault_is_loaded = 1
+        }
+        r.onerror = (e) => alert(e.target.error.name)
+        r.readAsText(files[0])
+      }
+
+    }
+    //$id("lpw").addEventListener("click", () => { $id("pwf").click() })
+    //$id("pwf").addEventListener('change', loadVault);
+
+    //$id("enc").addEventListener("click", encryptF);
+    //let x = parseCsv('",",".",this,sean,", "", """" ,# ,""12 , ,!""""abv"', ',')
+    //console.log(x)
+    function parseCsv(strData, strDelimiter) {
+      // Check to see if the delimiter is defined. If not,
+      // then default to comma.
+      strDelimiter = (strDelimiter || ",");
+
+      // Create a regular expression to parse the CSV values.
+      var objPattern = new RegExp(
+        (
+          // Delimiters.
+          "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
+
+          // Quoted fields.
+          "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
+
+          // Standard fields.
+          "([^\"\\" + strDelimiter + "\\r\\n]*))"
+        ),
+        "gi"
+      );
+
+
+      // Create an array to hold our data. Give the array
+      // a default empty first row.
+      var arrData = [[]];
+
+      // Create an array to hold our individual pattern
+      // matching groups.
+      var arrMatches = null;
+
+
+      // Keep looping over the regular expression matches
+      // until we can no longer find a match.
+      while (arrMatches = objPattern.exec(strData)) {
+
+        // Get the delimiter that was found.
+        var strMatchedDelimiter = arrMatches[1];
+
+        // Check to see if the given delimiter has a length
+        // (is not the start of string) and if it matches
+        // field delimiter. If id does not, then we know
+        // that this delimiter is a row delimiter.
+        if (
+          strMatchedDelimiter.length &&
+          (strMatchedDelimiter != strDelimiter)
+        ) {
+
+          // Since we have reached a new row of data,
+          // add an empty row to our data array.
+          arrData.push([]);
+
         }
 
-        $("open").classList.toggle("hide")
-        $("close").classList.toggle("hide")
+
+        // Now that we have our delimiter out of the way,
+        // let's check to see which kind of value we
+        // captured (quoted or unquoted).
+        if (arrMatches[2]) {
+
+          // We found a quoted value. When we capture
+          // this value, unescape any double quotes.
+          var strMatchedValue = arrMatches[2].replace(
+            new RegExp("\"\"", "g"),
+            "\""
+          );
+
+        } else {
+
+          // We found a non-quoted value.
+          var strMatchedValue = arrMatches[3];
+
+        }
+
+
+        // Now that we have our value string, let's add
+        // it to the data array.
+        arrData[arrData.length - 1].push(strMatchedValue);
+      }
+      console.log("here", arrData);
+      // Return the parsed data.
+      return (arrData);
     }
-    (() => {
-
-const $id = (id) => document.getElementById(id)
-const $cr = (t, opt) => document.createElement(t, opt)
-const $qs = (q) => document.querySelector(q)
-
-
-
-function getKeyMaterial() {
-  // TODO Create Password Display
-  let password = window.prompt("Enter your password");
-  let enc = new TextEncoder();
-  return window.crypto.subtle.importKey(
-    "raw",
-    enc.encode(password),
-    { name: "PBKDF2" },
-    false,
-    ["deriveBits", "deriveKey"]
-  );
-}
-
-function getKey(keyMaterial, salt) {
-  return window.crypto.subtle.deriveKey(
-    {
-      "name": "PBKDF2",
-      salt: salt,
-      "iterations": 1000000,
-      "hash": "SHA-256"
-    },
-    keyMaterial,
-    { "name": "AES-GCM", "length": 256 },
-    true,
-    ["encrypt", "decrypt"]
-  );
-}
-
-function getData() {
-  // TODO Get The JSON
-  let message = "this is the message => " + Date.now
-  let enc = new TextEncoder();
-  return enc.encode(message);
-}
-
-async function encryptF() {
-
-  // Create the Salt and IV
-  const salt = window.crypto.getRandomValues(new Uint8Array(16));
-  const iv = window.crypto.getRandomValues(new Uint8Array(12));
-
-  // Create the Encryption Key
-  let keyMaterial = await getKeyMaterial();
-  let key = await getKey(keyMaterial, salt);
-
-  // Encode the Data        
-  encrypted_data = await window.crypto.subtle.encrypt({ name: "AES-GCM", iv: iv }, key, getData());
-
-  // Prepare the Vault Information
-  const valut_data = window.btoa(String.fromCharCode.apply(null, new Uint8Array(encrypted_data)))
-  const vault_iv = window.btoa(String.fromCharCode.apply(null, new Uint8Array(iv)))
-  const vault_salt = window.btoa(String.fromCharCode.apply(null, salt))
-  const vault = JSON.stringify({ "data": valut_data, "iv": vault_iv, "salt": vault_salt })
-
-  // Download the Vault File
-  let dfl = $cr('a');
-  dfl.href = 'data:attachment/json,' + encodeURI(vault);
-  dfl.target = '_blank';
-  dfl.download = 'password.vault';
-  dfl.click();
-}
-
-async function decryptF(e) {
-
-  // Decode the Vault File
-  let f = decodeF(e.target.result)
-
-  // Create the PBKDF2 Key
-  let keyMaterial = await getKeyMaterial();
-  let key = await getKey(keyMaterial, f.salt);
-
-  // Decrypt the Vault Data or Report an Error
-  try {
-    let decrypted = await window.crypto.subtle.decrypt({ name: "AES-GCM", iv: f.iv }, key, f.data);
-    console.log(String.fromCharCode.apply(null, new Uint8Array(decrypted)));
-  } catch (e) {
-    console.log(e)
-  }
-}
-
-function decodeF(file) {
-
-  // Parse the Vault File's JSON
-  let vjs = JSON.parse(file)
-
-  // Create an Array of the JSON Elements to Decode
-  let dc = ["iv", "data", "salt"]
-
-  // Decode
-  for (let k of dc) {
-    let string = window.atob(vjs[k])
-    const buffer = new ArrayBuffer(string.length)
-    const bufferView = new Uint8Array(buffer)
-    for (let i = 0; i < string.length; i++) {
-      bufferView[i] = string.charCodeAt(i)
-    }
-    vjs[k] = buffer
-  }
-
-  return vjs
-}
-
-function CreateNewPasswordFile() {
-
-  let dfl = document.createElement('a');
-  dfl.href = 'data:attachment/text,' + encodeURI('{"Records":[]"Publickey": {}}');
-  dfl.target = '_blank';
-  dfl.download = 'vault.json';
-  dfl.click();
-
-}
-// Add Event Listeners and Handlers
-
-// Menu Section
-/*
-
-  <a href="#" id="enc">Download</a>
-  <a href="#" id="new">New</a>
-  <a href="#" id="apw">Add Password</a>
-*/
-let vault_is_loaded = 0;
-function menu() {
-
-  mi = $qs(".menu-content");
-
-  mi.style.display = "block";
-  if (vault_is_loaded) {
-  mi.innerHTML = `
-  <a href="#" id="lpw">Load</a>
-  <a href="#" id="anp">Add New Password</a>
-  <a href="#" id="enc">Download</a>      
-  <a href="#" id="apw">Change Master Password</a>
-  <a href="#" id="new">Create New Vault</a>
-  `
-  }    
-
-}
- 
-
-
-function loadVault() {
-  let files = $id("pwf").files
-
-  if (files.length != 0) {
-    let r = new FileReader();
-    r.onload = (e) => {
-      decryptF(e)
-      vault_is_loaded = 1
-    }
-    r.onerror = (e) => alert(e.target.error.name)
-    r.readAsText(files[0])
-  }
-
-}
-//$id("lpw").addEventListener("click", () => { $id("pwf").click() })
-//$id("pwf").addEventListener('change', loadVault);
-
-//$id("enc").addEventListener("click", encryptF);
-let x = parseCsv('",",".",this,sean,", "", """" ,# ,""12 , ,!""""abv"',',')
-console.log()
-function parseCsv( strData, strDelimiter ){
-		// Check to see if the delimiter is defined. If not,
-		// then default to comma.
-		strDelimiter = (strDelimiter || ",");
-
-		// Create a regular expression to parse the CSV values.
-		var objPattern = new RegExp(
-			(
-				// Delimiters.
-				"(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
-
-				// Quoted fields.
-				"(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
-
-				// Standard fields.
-				"([^\"\\" + strDelimiter + "\\r\\n]*))"
-			),
-			"gi"
-			);
-
-
-		// Create an array to hold our data. Give the array
-		// a default empty first row.
-		var arrData = [[]];
-
-		// Create an array to hold our individual pattern
-		// matching groups.
-		var arrMatches = null;
-
-
-		// Keep looping over the regular expression matches
-		// until we can no longer find a match.
-		while (arrMatches = objPattern.exec( strData )){
-
-			// Get the delimiter that was found.
-			var strMatchedDelimiter = arrMatches[ 1 ];
-
-			// Check to see if the given delimiter has a length
-			// (is not the start of string) and if it matches
-			// field delimiter. If id does not, then we know
-			// that this delimiter is a row delimiter.
-			if (
-				strMatchedDelimiter.length &&
-				(strMatchedDelimiter != strDelimiter)
-				){
-
-				// Since we have reached a new row of data,
-				// add an empty row to our data array.
-				arrData.push( [] );
-
-			}
-
-
-			// Now that we have our delimiter out of the way,
-			// let's check to see which kind of value we
-			// captured (quoted or unquoted).
-			if (arrMatches[ 2 ]){
-
-				// We found a quoted value. When we capture
-				// this value, unescape any double quotes.
-				var strMatchedValue = arrMatches[ 2 ].replace(
-					new RegExp( "\"\"", "g" ),
-					"\""
-					);
-
-			} else {
-
-				// We found a non-quoted value.
-				var strMatchedValue = arrMatches[ 3 ];
-
-			}
-
-
-			// Now that we have our value string, let's add
-			// it to the data array.
-			arrData[ arrData.length - 1 ].push( strMatchedValue );
-		}
-console.log("here",arrData);
-		// Return the parsed data.
-		return( arrData );
-	}
-
-
-})();
-
-
+  })();
 </script>
 
 </html>
