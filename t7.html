@@ -9,7 +9,7 @@
   <style>
     /*  * {
       border: dotted !important;
-    }  */
+    }    */
 
     body {
       font-family: Arial, Helvetica, sans-serif;
@@ -18,13 +18,16 @@
 
 
     #menu {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: .1fr 3fr;
       height: 100%;
       width: 0;
       position: fixed;
       z-index: 1;
       top: 0;
       left: 0;
-      background-color: #111;      
+      background-color: #111;
       overflow-x: hidden;
       transition: 500ms;
     }
@@ -59,9 +62,16 @@
     }
 
     .title {
-      font-weight: bolder;
+      font-weight: bold;
       font-size: 1.5rem;
       color: azure;
+      cursor: pointer;
+    }
+
+    .title:hover {
+      font-weight: bolder;
+
+      color: rgb(0, 0, 0);
       cursor: pointer;
     }
 
@@ -69,7 +79,6 @@
       display: none;
     }
 
-     
 
     .link {
       cursor: pointer;
@@ -83,13 +92,16 @@
       color: rgb(0, 98, 255);
     }
 
+    .right {
+      text-align: right;
+    }
+
     .left,
     .right {
       flex: 1;
     }
 
     .rec {
-
       color: black !important;
       background-color: rgb(190, 190, 190);
     }
@@ -129,16 +141,27 @@
       display: flex;
     }
 
-
     #close {
       text-align: right;
-      
+    }
+
+    .closeButton {
+      color: rgb(218, 218, 218);
+      font-weight: bolder;
+      font-size: 1.5rem;
+      margin-left: auto;
+      padding: 3px;
+
+    }
+
+    .closeButton:hover {
+      color: rgb(152, 152, 152);
+
     }
 
     #content {
-      
       display: grid;
-      padding-top:50px;
+      padding-top: 50px;
       grid-template-columns: .5fr repeat(4, 1fr);
       grid-gap: .5rem;
     }
@@ -150,10 +173,14 @@
       }
 
       .title {
-
         font-weight: bold;
         font-size: 1rem;
         color: azure;
+      }
+
+      .title:hover {
+        font-weight: bolder !important;
+        color: rgb(92, 57, 27);
       }
 
       p.th {
@@ -170,14 +197,14 @@
 <body>
 
   <div id="menu">
-    <div id="close" class="title">X</div>
-    <ul id="menuItems">    
-    <li class="link" id="lvlt">Load Vault</li>
-    <li class="link" id="lcvs">Import CSV</li>
-    <!-- After Load or Import -->
-    <li class="link" id="apsw">Add Password</li>
-    <li class="link" id="lcvs">Master Password</li>
-    <li class="link" id="lcvs">Save Vault</li>
+    <div id="close" class="closeButton">X</div>
+    <ul id="menuItems">
+      <li class="link" id="lvlt">Load Vault</li>
+      <li class="link" id="ImportCSV">Import CSV</li>
+      <!-- After Load or Import -->
+      <li class="link" id="apsw">Add Password</li>
+      <li class="link" id="lcvs2">Master Password</li>
+      <li class="link" id="lcvs3">Save Vault</li>
     </ul>
 
   </div>
@@ -185,9 +212,9 @@
   <div id="grid">
 
     <div id="head">
-      <p id="open" class="title left">☰</p>
-      <p class="title center">HookUpGlobal</p>
-      <p class="title right" >About</p>
+      <div id="open" class="title left">☰</div>
+      <div class="title center">HookUpGlobal</div>
+      <div class="title right">About</div>
 
     </div>
     <div id="actionBar">
@@ -206,13 +233,14 @@
 
 
   <div id="action" class="hide">
+    <div id="closeAction" class="closeButton">X</div>
     <div id="actionGrid">
-      <div class="form hide" id="loadVault">
+      <div class="form hide" id="load">
         <input id="pwf" type="file">
       </div>
 
-      <div class="form hide" id="loadCSV">
-        <input id="pcsvf" type="file">
+      <div class="form hide" id="import">
+        <input id="icsvf" type="file">
       </div>
 
       <div class="form hide" id="addPassword">
@@ -248,11 +276,14 @@
   (() => {
 
     const $ = (id) => document.getElementById(id)
+    const $id = (id) => document.getElementById(id)
+    const $cr = (t, opt) => document.createElement(t, opt)
+    const $qs = (q) => document.querySelector(q)
 
     // Import Vault
     //$("pwf").addEventListener("change", (e) => { console.log(e) })
     // Import CSV
-    //$("pcsvf").addEventListener("change", (e) => { console.log(e) })
+
 
     // Load Vault
     // $("lvlt").addEventListener("click", (e) => { console.log(e) })
@@ -261,43 +292,67 @@
 
 
     $openMenu = () => {
-      // If the Menu is Closed
       console.log("Clicked")
-      $("menu").style.width = "250px";
-      $("grid").style.marginLeft = "250px";
+      $("menu").style.width = "200px";
+      $("grid").style.marginLeft = "200px";
 
     }
+    $("open").addEventListener("click", $openMenu)
 
     $closeMenu = () => {
-      // If the Menu is Closed
       console.log("Clicked")
       $("menu").style.width = "0px";
       $("grid").style.margin = "auto";
-
     }
-
-
-    $("open").addEventListener("click", $openMenu)
-
     $("close").addEventListener("click", $closeMenu)
 
+    $closeAction = () => {
+      $("action").classList.toggle("hide")
+      let forms = $("action").querySelectorAll(".form")
+      for (let f of forms) {
+        f.classList.add("hide")
+      }
+    }
+
+    $("closeAction").addEventListener("click", $closeAction)
     // Add Password
     $addpass = () => {
-      // 
-
       //$("action").classList.toggle("hide");
       //$("addPassword").classList.toggle("hide");
-
     }
     $("apsw").addEventListener("click", $addpass)
 
+    $importCSV = () => {
 
 
-    const $id = (id) => document.getElementById(id)
-    const $cr = (t, opt) => document.createElement(t, opt)
-    const $qs = (q) => document.querySelector(q)
+      let files = $("icsvf").files
+      console.trace();
+      if (files.length != 0) {
+        let r = new FileReader();
+        r.onload = (e) => {
+          $parseCsv(e)
+        }
+        r.onerror = (e) => alert(e.target.error.name)
+        r.readAsText(files[0])
+      }
+
+    }
+    $("ImportCSV").addEventListener("click", () => { toggle({ "action": ["hide"], "import": ["hide"] }) })
+    $("icsvf").addEventListener("change", $importCSV)
 
 
+    // Perlish Helper Function
+    // Takes a obj with the key of an id of an element 
+    // and a vaule of and an array of classes to toggle.
+    // Example: toggle({"elm1":["class1","class2"],elm2":["class1","class2"]})
+    function toggle(obj) {
+      // Use In because we need the element id.
+      for (let id in obj) {
+        for (let cls of obj[id]) {
+          $(id).classList.toggle(cls)
+        }
+      }
+    }
 
     function getKeyMaterial() {
       // TODO Create Password Display
@@ -413,21 +468,7 @@
 
 
 
-    function loadCVS() {
-      console.log("here")
-      $("action").classList.toggle("hide")
-      /* let files = $id("pwf").files
-  
-      if (files.length != 0) {
-        let r = new FileReader();
-        r.onload = (e) => {
-  
-        }
-        r.onerror = (e) => alert(e.target.error.name)
-        r.readAsText(files[0])
-      }
-  */
-    }
+
 
     function loadVault() {
       let files = $id("pwf").files
@@ -443,92 +484,31 @@
       }
 
     }
-    //$id("lpw").addEventListener("click", () => { $id("pwf").click() })
-    //$id("pwf").addEventListener('change', loadVault);
 
-    //$id("enc").addEventListener("click", encryptF);
-    //let x = parseCsv('",",".",this,sean,", "", """" ,# ,""12 , ,!""""abv"', ',')
-    //console.log(x)
-    function parseCsv(strData, strDelimiter) {
-      // Check to see if the delimiter is defined. If not,
-      // then default to comma.
-      strDelimiter = (strDelimiter || ",");
-
-      // Create a regular expression to parse the CSV values.
-      var objPattern = new RegExp(
-        (
-          // Delimiters.
-          "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
-
-          // Quoted fields.
-          "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
-
-          // Standard fields.
-          "([^\"\\" + strDelimiter + "\\r\\n]*))"
-        ),
-        "gi"
-      );
-
-
-      // Create an array to hold our data. Give the array
-      // a default empty first row.
-      var arrData = [[]];
-
-      // Create an array to hold our individual pattern
-      // matching groups.
-      var arrMatches = null;
-
-
-      // Keep looping over the regular expression matches
-      // until we can no longer find a match.
-      while (arrMatches = objPattern.exec(strData)) {
-
-        // Get the delimiter that was found.
-        var strMatchedDelimiter = arrMatches[1];
-
-        // Check to see if the given delimiter has a length
-        // (is not the start of string) and if it matches
-        // field delimiter. If id does not, then we know
-        // that this delimiter is a row delimiter.
-        if (
-          strMatchedDelimiter.length &&
-          (strMatchedDelimiter != strDelimiter)
-        ) {
-
-          // Since we have reached a new row of data,
-          // add an empty row to our data array.
-          arrData.push([]);
-
-        }
-
-
-        // Now that we have our delimiter out of the way,
-        // let's check to see which kind of value we
-        // captured (quoted or unquoted).
-        if (arrMatches[2]) {
-
-          // We found a quoted value. When we capture
-          // this value, unescape any double quotes.
-          var strMatchedValue = arrMatches[2].replace(
-            new RegExp("\"\"", "g"),
-            "\""
-          );
-
-        } else {
-
-          // We found a non-quoted value.
-          var strMatchedValue = arrMatches[3];
-
-        }
-
-
-        // Now that we have our value string, let's add
-        // it to the data array.
-        arrData[arrData.length - 1].push(strMatchedValue);
+    $parseCsv = (e) => {
+      const $filter = (f) => {
+        return m.length != 0
       }
-      console.log("here", arrData);
-      // Return the parsed data.
-      return (arrData);
+      let records = e.target.result.split(/(?:\r\n|\n)+/).filter($filter);
+
+      let head = lines.splice(0, 1)[0].split(",");
+
+
+      let fldsRegx = /(?:\"([^\"]*(?:\"\"[^\"]*)*)\")|([^\",]+)/g;
+      let elements = [];
+
+      for (let rec of records) {
+        let records = {};
+          while (flds = fldsRegx.exec(re[i])) {
+          let v = flds[1] || flds[2];
+          v = v.replace(/\"\"/g, "\"");
+
+          
+        }
+
+        elements.push(element);
+      }
+
     }
   })();
 </script>
